@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md. Jaber Al Nahian - AI Researcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --text: #333;
+            --light: #f1f1f1;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--white);
+        }
+
+        /* Hero Carousel Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide img,
+        .hero-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(15, 52, 96, 0.75) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 40px;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 6px solid var(--white);
+            margin-bottom: 30px;
+            object-fit: cover;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero .affiliation {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .metric:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 28px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            transition: all 0.3s;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .social-links a:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--highlight) !important;
+            border: 2px solid var(--highlight) !important;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: var(--white) !important;
+            color: var(--highlight) !important;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--white);
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            margin-left: -3px;
+            background: var(--white);
+            border-radius: 50%;
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--highlight);
+            transition: width 0.3s;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--highlight);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        /* About Section */
+        .about-content {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 20px;
+            line-height: 1.9;
+            font-size: 1.1em;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .interest-tag {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .interest-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(15, 52, 96, 0.3);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .news-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-date {
+            color: var(--white);
+            background: var(--highlight);
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .news-content {
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .news-highlight {
+            color: var(--highlight);
+            font-weight: 600;
+        }
+
+        /* Publications */
+        .publication {
+            background: var(--white);
+            padding: 0;
+            margin-bottom: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 0;
+        }
+
+        .publication:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .pub-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 200px;
+        }
+
+        .pub-content {
+            padding: 30px;
+        }
+
+        .pub-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .pub-authors {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .pub-venue {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .pub-award {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .pub-links {
+            margin-top: 15px;
+        }
+
+        .pub-links a {
+            color: var(--highlight);
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .pub-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Blog Cards */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-date {
+            color: var(--highlight);
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-title {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin: 12px 0;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+
+        .read-more {
+            color: var(--highlight);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* Teaching Cards */
+        .course-card {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-title {
+            font-size: 1.5em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .course-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .topic-tag {
+            background: var(--light);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--text);
+            font-weight: 500;
+            border: 1px solid #ddd;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px;
+            color: var(--white);
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent), var(--highlight));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -59px;
+            top: 35px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--highlight);
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px var(--accent);
+        }
+
+        .timeline-title {
+            font-size: 1.4em;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Awards Grid */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .award-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid var(--highlight);
+            transition: all 0.3s;
+        }
+
+        .award-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 100px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .publication {
+                grid-template-columns: 1fr;
+            }
+            .pub-image {
+                height: 200px;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .timeline {
+                padding-left: 30px;
+            }
+            .timeline-item::before {
+                left: -39px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Carousel Section -->
+    <div class="hero">
+        <div class="hero-carousel" id="heroCarousel">
+            <!-- Carousel slides will be inserted here -->
+        </div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <img id="profileImage" src="profile_pic.jpg" alt="Profile" class="profile-img">
+            <h1 id="name">Md. Jaber Al Nahian</h1>
+            <div id="subtitle" class="subtitle">PhD Student | AI in Medical Imaging | Computer Vision Researcher</div>
+            <div id="affiliation" class="affiliation">NIDUS Lab, University of Alberta</div>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <span id="citations" class="metric-value" data-target="641">0</span>
+                    <span class="metric-label">Citations</span>
+                </div>
+                <div class="metric">
+                    <span id="hindex" class="metric-value" data-target="10">0</span>
+                    <span class="metric-label">h-index</span>
+                </div>
+                <div class="metric">
+                    <span id="publications" class="metric-value" data-target="20">0</span>
+                    <span class="metric-label">Publications</span>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="btn-primary" id="cvDownload">📄 Download CV</a>
+                <a href="mailto:mdjabera@ualberta.ca">📧 Email</a>
+                <a href="https://scholar.google.com/citations?user=xlMn5WYAAAAJ&hl=en" target="_blank">🎓 Scholar</a>
+                <a href="https://www.linkedin.com/in/jaber-al-nahian-21900a157" target="_blank">💼 LinkedIn</a>
+                <a href="https://github.com/jaberalnahian" target="_blank">💻 GitHub</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div id="aboutContent" class="about-content"></div>
+            <h3 style="margin-top: 40px; color: var(--primary); font-size: 1.8em; font-weight: 700;">Research Interests</h3>
+            <div id="interestsContainer" class="interests"></div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="section">
+            <h2 class="section-title">Recent News</h2>
+            <p class="section-subtitle">Latest updates on my research, awards, and academic journey</p>
+            <div id="newsContainer" class="news-grid"></div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="section">
+            <h2 class="section-title">Selected Publications</h2>
+            <p class="section-subtitle">Peer-reviewed papers in top-tier conferences and journals</p>
+            <div id="publicationsContainer"></div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://scholar.google.com/citations?user=xlMn5WYAAAAJ&hl=en" target="_blank" style="color: var(--highlight); font-weight: 700; font-size: 1.2em; text-decoration: none;">View all publications on Google Scholar →</a>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <h2 class="section-title">Blog & Insights</h2>
+            <p class="section-subtitle">Thoughts on AI research, academic life, and technical deep dives</p>
+            <div id="blogContainer" class="blog-grid"></div>
+        </section>
+
+        <!-- Teaching Section -->
+        <section id="teaching" class="section">
+            <h2 class="section-title">Teaching Portfolio</h2>
+            <p class="section-subtitle">Courses taught and students mentored</p>
+            <div id="teachingContainer"></div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <h2 class="section-title">Travel Gallery</h2>
+            <p class="section-subtitle">Moments from conferences, research visits, and adventures around the world</p>
+            <div id="galleryContainer" class="gallery-grid"></div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <h2 class="section-title">Experience</h2>
+            <p class="section-subtitle">Academic and research positions</p>
+            <div id="experienceContainer" class="timeline"></div>
+        </section>
+
+        <!-- Awards Section -->
+        <section id="awards" class="section">
+            <h2 class="section-title">Honors & Awards</h2>
+            <p class="section-subtitle">Recognition for research excellence and academic achievement</p>
+            <div id="awardsContainer" class="awards-grid"></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Contact</h2>
+            <div id="contactContent" class="about-content"></div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p style="font-size: 1.1em;">&copy; 2025 Md. Jaber Al Nahian. All rights reserved.</p>
+        <p style="margin-top: 15px; font-size: 0.95em; opacity: 0.8;">Designed with passion for research and innovation</p>
+        <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.7;">Last updated: November 2025</p>
+    </footer>
+
+    <script>
+        // ==================== CONFIGURATION DATA ====================
+        const CONFIG = {
+            profile: {
+                name: "Md. Jaber Al Nahian",
+                subtitle: "PhD Student | AI in Medical Imaging | Computer Vision Researcher",
+                affiliation: "NIDUS Lab, University of Alberta",
+                image: "profile_pic.jpg",
+                cvLink: "https://drive.google.com/file/d/1wt0TAo2xhUmLCxsYDmzV9FTlamHyw2KA/view?usp=sharing",
+                email: "mdjabera@ualberta.ca",
+                citations: 641,
+                hindex: 10,
+                publicationCount: "20+",
+                // Hero carousel backgrounds - Add your images/videos here
+                heroBackgrounds: [
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1920' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920' },
+                    // Add your own images: { type: 'image', src: 'your-image.jpg' }
+                    // Or videos: { type: 'video', src: 'your-video.mp4' }
+                ]
+            },
+
+            about: {
+                bio: [
+                    "I am a PhD student in Medical Sciences at the University of Alberta, working at the NIDUS Lab. My research focuses on developing trustworthy AI systems for medical imaging, with particular emphasis on point-of-care ultrasound (POCUS), foundation models, and uncertainty estimation.",
+                    "Previously, I completed my M.Sc. in Computer Science at the University of Calgary (2023-2025), where I worked on self-supervised learning and image segmentation. I have published in top-tier venues including CVPR and ICCV.",
+                    "My work has been recognized with the Innovation Award at ICCV 2025 and multiple prestigious scholarships totaling over $50,000 CAD."
+                ],
+                interests: [
+                    "Medical Imaging AI",
+                    "Self-Supervised Learning",
+                    "Foundation Models",
+                    "Computer Vision",
+                    "Uncertainty Estimation",
+                    "Trustworthy AI",
+                    "Agricultural AI",
+                    "Deep Learning"
+                ]
+            },
+
+            news: [
+                {
+                    date: "Sep 2025",
+                    content: "Started <span class='news-highlight'>PhD in AI in Medical Imaging</span> at University of Alberta, working on trustworthy AI for point-of-care ultrasound at NIDUS Lab."
+                },
+                {
+                    date: "Sep 2025",
+                    content: "<span class='news-highlight'>Defended my M.Sc. thesis at the University of Calgary</span> on self-supervised foundation model for agricultural vision."
+                },
+                {
+                    date: "Aug 2025",
+                    content: "Won <span class='news-highlight'>Innovation Award at ICCV 2025</span> Workshop on Computer Vision for Plant Phenotyping and Agriculture (CVPPA) with $4,000 travel grant."
+                },
+                {
+                    date: "Jun 2025",
+                    content: "Paper <span class='news-highlight'>accepted at CVPR 2025</span> Workshop on Agriculture-Vision for oral presentation in Nashville, USA."
+                },
+                {
+                    date: "May 2025",
+                    content: "Paper on <span class='news-highlight'>WheatSAM</span> accepted at Conference on Robots and Vision (CRV) 2025 in Calgary."
+                },
+                {
+                    date: "Aug 2024",
+                    content: "Awarded <span class='news-highlight'>Alberta Innovates Graduate Scholarship</span> ($15,000 CAD) for outstanding research potential."
+                },
+                {
+                    date: "Aug 2024",
+                    content: "Received <span class='news-highlight'>Alberta Graduate Excellence Scholarship</span> (AGES) worth $11,000 CAD for academic excellence."
+                },
+                {
+                    date: "May 2024",
+                    content: "Awarded <span class='news-highlight'>Google GCP Credit Award</span> ($7,000 CAD) for computational research."
+                },
+                {
+                    date: "Sep 2023",
+                    content: "Began M.Sc. in Computer Science at University of Calgary with full funding ($26,000 CAD)."
+                }
+            ],
+
+            publications: [
+                {
+                    title: "Agri-FM+: A Self-Supervised Foundation Model for Agricultural Vision",
+                    authors: "<strong>M.J.A. Nahian</strong>, T. Ghosh, F. Sheikhi, F. Maleki",
+                    venue: "CVPR 2025 Workshop on Agriculture-Vision, Nashville, USA",
+                    year: 2025,
+                    award: "Oral Presentation",
+                    image: "AgriFM.png",
+                    links: {
+                        pdf: "https://openaccess.thecvf.com/content/CVPR2025W/V4A/papers/Al_Nahian_Agri-FM_A_Self-Supervised_Foundation_Model_for_Agricultural_Vision_CVPRW_2025_paper.pdf",
+                        code: "#",
+                        project: "#"
+                    }
+                },
+                {
+                    title: "Decoder-aware Self-Supervised Continual Pretraining for Wheat Organ Segmentation",
+                    authors: "T. Ghosh, <strong>M.J.A. Nahian</strong>, F. Sheikhi, F. Maleki",
+                    venue: "ICCV 2025 Workshop CVPPA, Honolulu, Hawaii, USA",
+                    year: 2025,
+                    award: "Innovation Award Winner",
+                    image: "ICCV.png",
+                    links: {
+                        pdf: "https://openaccess.thecvf.com/content/ICCV2025W/CVPPA/papers/Ghosh_Decoder-aware_Self-Supervised_Continual_Pretraining_and_Uncertainty-Guided_Pseudo-Labeling_for_Wheat_Organ_ICCVW_2025_paper.pdf",
+                        code: "#"
+                    }
+                },
+                {
+                    title: "WheatSAM: A Two-Stage Wheat Head Automatic Segmentation Framework",
+                    authors: "<strong>M.J.A. Nahian</strong>, T. Ghosh, F. Sheikhi, I. McQuillan, F. Maleki",
+                    venue: "Conference on Robots and Vision (CRV) 2025, Calgary, Canada",
+                    year: 2025,
+                    image: "wheatsam.png",
+                    links: {
+                        pdf: "https://crv.pubpub.org/pub/gv61tfyz/release/1",
+                        code: "#"
+                    }
+                },
+                {
+                    title: "Towards an Accelerometer-Based Elderly Fall Detection System",
+                    authors: "<strong>M.J.A. Nahian</strong>, T. Ghosh, M.H. Al Banna, et al.",
+                    venue: "IEEE Access, vol. 9, pp. 39413-39431, 2021",
+                    year: 2021,
+                    image: "fall.png",
+                    links: {
+                        pdf: "https://ieeexplore.ieee.org/abstract/document/9344695",
+                        doi: "#",
+                        citations: "136 Citations"
+                    }
+                }
+            ],
+
+            blogs: [
+                {
+                    title: "Journey to ICCV 2025: Winning the Innovation Award",
+                    date: "November 2025",
+                    excerpt: "Reflecting on the exciting journey of developing our wheat segmentation model and presenting at ICCV in Hawaii...",
+                    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400",
+                    link: "#"
+                },
+                {
+                    title: "Building Foundation Models for Agricultural AI",
+                    date: "October 2025",
+                    excerpt: "Insights from developing Agri-FM+, a self-supervised foundation model trained on millions of agricultural images...",
+                    image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400",
+                    link: "#"
+                },
+                {
+                    title: "Starting My PhD at University of Alberta",
+                    date: "September 2025",
+                    excerpt: "Excited to begin my doctoral journey at NIDUS Lab, focusing on trustworthy AI for medical imaging...",
+                    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400",
+                    link: "#"
+                }
+            ],
+
+            teaching: [
+                {
+                    title: "CPSC 331 - Data Structures & Algorithm Analysis",
+                    institution: "University of Calgary",
+                    terms: "Winter 2024, Winter 2025, Spring 2025",
+                    role: "Graduate Teaching Assistant",
+                    description: "Delivered tutorials on advanced data structures, algorithm analysis, and problem-solving techniques. Mentored 100+ students per term.",
+                    topics: ["Binary Trees", "Graph Algorithms", "Dynamic Programming", "Time Complexity", "Sorting & Searching"]
+                },
+                {
+                    title: "SENG 513 - Web-Based Systems",
+                    institution: "University of Calgary",
+                    terms: "Fall 2024",
+                    role: "Graduate Teaching Assistant",
+                    description: "Taught modern web development concepts including frontend frameworks, backend APIs, and deployment.",
+                    topics: ["React", "Node.js", "REST APIs", "MongoDB", "Cloud Deployment"]
+                },
+                {
+                    title: "Artificial Intelligence",
+                    institution: "Bangladesh University of Professionals",
+                    terms: "Jan-Jun 2022, Jan-Jun 2023",
+                    role: "Lecturer",
+                    description: "Designed and delivered comprehensive AI course covering machine learning, neural networks, and applications.",
+                    topics: ["Machine Learning", "Neural Networks", "Deep Learning", "Computer Vision", "NLP"]
+                }
+            ],
+
+            gallery: [
+                {
+                    title: "Visit to Alberta Badlands",
+                    location: "Hoodoos, Drumheller",
+                    image: "Hoodos.jpg"
+                },
+                {
+                    title: "Experiencing Northern Lights",
+                    location: "Calgary, Canada",
+                    image: "Aurora.jpg"
+                },
+                {
+                    title: "Royal Tyrrell Museum",
+                    location: "Drumheller, Alberta, Canada",
+                    image: "RoyalTyrel.jpg"
+                },
+                {
+                    title: "Visit to Lake Louise",
+                    location: "Alberta, Canada",
+                    image: "lakelouis.jpg"
+                },
+                {
+                    title: "Great Canadian Adventure 2023",
+                    location: "Alberta, Canada",
+                    image: "great_canada.heic"
+                },
+                {
+                    title: "Stephen Avenue",
+                    location: "Downtown, Calgary, Canada",
+                    image: "downtown.jpg"
+                }
+            ],
+
+            experience: [
+                {
+                    title: "Graduate Research Assistant",
+                    organization: "NIDUS Lab, University of Alberta",
+                    date: "September 2025 - Present",
+                    description: "Developing trustworthy AI systems for point-of-care ultrasound with focus on uncertainty estimation and foundation models. Building reproducible pipelines for multi-site medical imaging datasets."
+                },
+                {
+                    title: "Graduate Research Assistant",
+                    organization: "Vision Research Lab, University of Calgary",
+                    date: "September 2023 - August 2025",
+                    description: "Developed self-supervised learning methods for medical and agricultural image segmentation. Implemented continual pretraining strategies and released open-source models. Won Innovation Award at ICCV 2025."
+                },
+                {
+                    title: "Lecturer",
+                    organization: "Bangladesh University of Professionals",
+                    date: "April 2021 - August 2023",
+                    description: "Taught courses in AI, Software Engineering, and Database Management Systems. Supervised student research projects and participated in curriculum development."
+                },
+                {
+                    title: "Graduate Research Fellow",
+                    organization: "ICT Division, Government of Bangladesh",
+                    date: "March 2019 - August 2020",
+                    description: "Conducted applied ML research on elderly fall detection. Developed prototypes and prepared technical policy briefs for government stakeholders."
+                }
+            ],
+
+            awards: [
+                {
+                    title: "Innovation Award, ICCV 2025",
+                    organization: "Global Wheat Segmentation Challenge",
+                    value: "$4,000 USD Travel Grant"
+                },
+                {
+                    title: "Alberta Innovates Graduate Scholarship",
+                    organization: "Alberta Innovates, 2024-2025",
+                    value: "$15,000 CAD"
+                },
+                {
+                    title: "Alberta Graduate Excellence Scholarship",
+                    organization: "Government of Alberta, 2024-2025",
+                    value: "$11,000 CAD"
+                },
+                {
+                    title: "Google GCP Credit Award",
+                    organization: "Google Cloud Platform, 2024-2025",
+                    value: "$7,000 CAD"
+                },
+                {
+                    title: "Best Paper Award",
+                    organization: "ICICT4SD, 2021",
+                    value: "Recognition Award"
+                },
+                {
+                    title: "Full Funded Graduate Admission",
+                    organization: "University of Calgary, 2023-2024",
+                    value: "$26,000 CAD"
+                }
+            ],
+
+            contact: {
+                email: "mdjabera@ualberta.ca",
+                office: "NIDUS Lab, Department of Radiology and Diagnostic Imaging, University of Alberta",
+                location: "Edmonton, Alberta, Canada"
+            }
+        };
+
+        // ==================== HERO CAROUSEL ====================
+        let currentHeroSlide = 0;
+
+        function initHeroCarousel() {
+            const carousel = document.getElementById('heroCarousel');
+            const backgrounds = CONFIG.profile.heroBackgrounds;
+            
+            backgrounds.forEach((bg, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'hero-slide' + (index === 0 ? ' active' : '');
+                
+                if (bg.type === 'video') {
+                    slide.innerHTML = `<video autoplay muted loop playsinline src="${bg.src}"></video>`;
+                } else {
+                    slide.innerHTML = `<img src="${bg.src}" alt="Background ${index + 1}">`;
+                }
+                
+                carousel.appendChild(slide);
+            });
+
+            // Auto-advance carousel every 5 seconds
+            setInterval(() => {
+                const slides = document.querySelectorAll('.hero-slide');
+                slides[currentHeroSlide].classList.remove('active');
+                currentHeroSlide = (currentHeroSlide + 1) % slides.length;
+                slides[currentHeroSlide].classList.add('active');
+            }, 5000);
+        }
+
+        // ==================== ANIMATED COUNTER ====================
+        function animateCounter(element, target, duration = 2000, isPublications = false) {
+            const start = 0;
+            const increment = target / (duration / 16); // 60fps
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                // Format the number
+                const displayValue = Math.floor(current);
+                if (isPublications) {
+                    element.textContent = displayValue + '+';
+                } else {
+                    element.textContent = displayValue.toLocaleString();
+                }
+            }, 16);
+        }
+
+        function initCounters() {
+            // Start animation after a short delay for effect
+            setTimeout(() => {
+                const citations = document.getElementById('citations');
+                const hindex = document.getElementById('hindex');
+                const publications = document.getElementById('publications');
+                
+                animateCounter(citations, parseInt(citations.dataset.target), 2500);
+                animateCounter(hindex, parseInt(hindex.dataset.target), 2000);
+                animateCounter(publications, parseInt(publications.dataset.target), 2000, true);
+            }, 500);
+        }
+
+        // ==================== RENDERING FUNCTIONS ====================
+        
+        function renderProfile() {
+            document.getElementById('name').textContent = CONFIG.profile.name;
+            document.getElementById('subtitle').textContent = CONFIG.profile.subtitle;
+            document.getElementById('affiliation').textContent = CONFIG.profile.affiliation;
+            document.getElementById('profileImage').src = CONFIG.profile.image;
+            // Note: Citations, h-index, and publications are animated separately by initCounters()
+            document.getElementById('cvDownload').href = CONFIG.profile.cvLink;
+        }
+
+        function renderAbout() {
+            const aboutHTML = CONFIG.about.bio.map(p => `<p style="margin-bottom: 20px;">${p}</p>`).join('');
+            document.getElementById('aboutContent').innerHTML = aboutHTML;
+
+            const interestsHTML = CONFIG.about.interests.map(i => 
+                `<span class="interest-tag">${i}</span>`
+            ).join('');
+            document.getElementById('interestsContainer').innerHTML = interestsHTML;
+        }
+
+        function renderNews() {
+            const newsHTML = CONFIG.news.map(item => `
+                <div class="news-card">
+                    <div class="news-date">${item.date}</div>
+                    <div class="news-content">${item.content}</div>
+                </div>
+            `).join('');
+            document.getElementById('newsContainer').innerHTML = newsHTML;
+        }
+
+        function renderPublications() {
+            const pubsHTML = CONFIG.publications.map(pub => `
+                <div class="publication">
+                    <img src="${pub.image}" alt="${pub.title}" class="pub-image">
+                    <div class="pub-content">
+                        <div class="pub-title">${pub.title}</div>
+                        <div class="pub-authors">${pub.authors}</div>
+                        <div class="pub-venue">${pub.venue}</div>
+                        ${pub.award ? `<span class="pub-award">🏆 ${pub.award}</span>` : ''}
+                        <div class="pub-links">
+                            ${Object.entries(pub.links).map(([key, url]) => 
+                                `<a href="${url}" target="_blank">[${key.toUpperCase()}]</a>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('publicationsContainer').innerHTML = pubsHTML;
+        }
+
+        function renderBlogs() {
+            const blogsHTML = CONFIG.blogs.map(blog => `
+                <div class="blog-card">
+                    <img src="${blog.image}" alt="${blog.title}" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-date">${blog.date}</div>
+                        <div class="blog-title">${blog.title}</div>
+                        <div class="blog-excerpt">${blog.excerpt}</div>
+                        <a href="${blog.link}" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('blogContainer').innerHTML = blogsHTML;
+        }
+
+        function renderTeaching() {
+            const teachingHTML = CONFIG.teaching.map(course => `
+                <div class="course-card">
+                    <div class="course-title">${course.title}</div>
+                    <div class="course-info" style="color: #666; margin-bottom: 10px;">
+                        <strong>${course.institution}</strong> | ${course.role} | ${course.terms}
+                    </div>
+                    <p style="color: #666; margin-top: 10px; line-height: 1.7;">${course.description}</p>
+                    <div class="course-topics">
+                        ${course.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('teachingContainer').innerHTML = teachingHTML;
+        }
+
+        function renderGallery() {
+            const galleryHTML = CONFIG.gallery.map(item => `
+                <div class="gallery-item">
+                    <img src="${item.image}" alt="${item.title}" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <div class="gallery-title">${item.title}</div>
+                        <div class="gallery-location" style="font-size: 0.95em; opacity: 0.9;">📍 ${item.location}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('galleryContainer').innerHTML = galleryHTML;
+        }
+
+        function renderExperience() {
+            const expHTML = CONFIG.experience.map(exp => `
+                <div class="timeline-item">
+                    <div class="timeline-title">${exp.title}</div>
+                    <div class="timeline-org" style="color: var(--accent); font-weight: 600; margin-bottom: 8px;">${exp.organization}</div>
+                    <div class="timeline-date" style="color: #999; font-size: 0.95em; margin-bottom: 12px;">${exp.date}</div>
+                    <div style="color: #666; line-height: 1.7;">${exp.description}</div>
+                </div>
+            `).join('');
+            document.getElementById('experienceContainer').innerHTML = expHTML;
+        }
+
+        function renderAwards() {
+            const awardsHTML = CONFIG.awards.map(award => `
+                <div class="award-card">
+                    <div class="award-title" style="font-weight: 700; color: var(--primary); margin-bottom: 10px; font-size: 1.2em;">${award.title}</div>
+                    <div style="color: #666; margin-bottom: 5px;">${award.organization}</div>
+                    <div style="color: var(--highlight); font-weight: bold; font-size: 1.1em;">${award.value}</div>
+                </div>
+            `).join('');
+            document.getElementById('awardsContainer').innerHTML = awardsHTML;
+        }
+
+        function renderContact() {
+            const contactHTML = `
+                <p style="margin-bottom: 15px;"><strong>Email:</strong> <a href="mailto:${CONFIG.contact.email}" style="color: var(--highlight);">${CONFIG.contact.email}</a></p>
+                <p style="margin-bottom: 15px;"><strong>Office:</strong> ${CONFIG.contact.office}</p>
+                <p style="margin-bottom: 25px;"><strong>Location:</strong> ${CONFIG.contact.location}</p>
+                <p>
+                    <strong>Find me on:</strong><br>
+                    <a href="https://scholar.google.com/citations?user=xlMn5WYAAAAJ&hl=en" target="_blank" style="color: var(--highlight); margin-right: 15px;">Google Scholar</a>
+                    <a href="https://www.linkedin.com/in/jaber-al-nahian-21900a157" target="_blank" style="color: var(--highlight); margin-right: 15px;">LinkedIn</a>
+                    <a href="https://github.com/jaberalnahian" target="_blank" style="color: var(--highlight);">GitHub</a>
+                </p>
+            `;
+            document.getElementById('contactContent').innerHTML = contactHTML;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initHeroCarousel();
+            initCounters(); // Start the animated counters
+            renderProfile();
+            renderAbout();
+            renderNews();
+            renderPublications();
+            renderBlogs();
+            renderTeaching();
+            renderGallery();
+            renderExperience();
+            renderAwards();
+            renderContact();
+        });
+    </script>
+</body>
+</html>
